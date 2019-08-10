@@ -1,12 +1,11 @@
 import logging.config
 
 import os
+import settings
 from flask import Flask, Blueprint
-from rest_api_demo import settings
-from rest_api_demo.api.blog.endpoints.posts import ns as blog_posts_namespace
-from rest_api_demo.api.blog.endpoints.categories import ns as blog_categories_namespace
-from rest_api_demo.api.restplus import api
-from rest_api_demo.database import db
+from api.v1.endpoints.suggestions import ns as suggestions_namespace
+from api.restplus import api
+#from rest_api_demo.database import db
 
 app = Flask(__name__)
 logging_conf_path = os.path.normpath(os.path.join(os.path.dirname(__file__), '../logging.conf'))
@@ -29,11 +28,10 @@ def initialize_app(flask_app):
 
     blueprint = Blueprint('api', __name__, url_prefix='/api')
     api.init_app(blueprint)
-    api.add_namespace(blog_posts_namespace)
-    api.add_namespace(blog_categories_namespace)
+    api.add_namespace(suggestions_namespace)
     flask_app.register_blueprint(blueprint)
 
-    db.init_app(flask_app)
+#    db.init_app(flask_app)
 
 
 def main():
