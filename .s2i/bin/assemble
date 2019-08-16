@@ -1,8 +1,8 @@
 #!/bin/bash
 
-mkdir app
+mkdir $(HOME)/app
 
-cp * app
+cp -rf /tmp/src $(HOME)/app
 
-pip install -r app/requirements.txt
+pip install -r $(HOME)/app/requirements.txt
 
