@@ -1,0 +1,8 @@
+#!/bin/bash
+
+mkdir app
+
+cp * app
+
+pip install -r app/requirements.txt
+
