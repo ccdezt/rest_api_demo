@@ -4,6 +4,9 @@ from flask import request
 from flask_restplus import Resource
 from api.restplus import api
 from api import helper
+from api.Git import Git
+from api.repo_handler import queue_up_project
+from api import repo_handler
 
 log = logging.getLogger(__name__)
 
@@ -46,3 +49,19 @@ class SuggestionItem(Resource):
 
         d = helper.Helper()
         return d.get_yml(name)
+
+@ns.route('/git/<string:name>')
+class GitTest(Resource):
+
+    def get(self, name):
+        """
+        Runs through the process of adding, committing and pushing into a git repo
+
+        """
+
+        new_git = Git(name)
+        queue_up_project(new_git)
+        #repo_handler.git_handler(name)
+
+
+

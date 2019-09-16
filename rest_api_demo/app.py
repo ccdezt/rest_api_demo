@@ -5,11 +5,12 @@ import settings
 from flask import Flask, Blueprint
 from api.v1.endpoints.suggestions import ns as suggestions_namespace
 from api.restplus import api
+from api.repo_handler import QueueOperation
 #from rest_api_demo.database import db
 
 app = Flask(__name__)
 logging_conf_path = os.path.normpath(os.path.join(os.path.dirname(__file__), '../logging.conf'))
-logging.config.fileConfig(logging_conf_path)
+logging.config.fileConfig(logging_conf_path, disable_existing_loggers=False)
 log = logging.getLogger(__name__)
 
 
@@ -32,6 +33,9 @@ def initialize_app(flask_app):
     flask_app.register_blueprint(blueprint)
 
 #    db.init_app(flask_app)
+#   start queue watch
+    queue_watch = QueueOperation()
+    queue_watch.start()
 
 
 def main():
